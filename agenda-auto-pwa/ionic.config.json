@@ -1,0 +1,7 @@
+{
+  "name": "agenda-auto-pwa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
