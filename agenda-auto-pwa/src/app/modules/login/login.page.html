@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>AgendaAuto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Parola</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col class="test">
+        <ion-button type="submit" color="danger" expand="block">Intra in cont</ion-button>
+        <a [routerLink]="['/register']" class="small-text ion-padding-top">Creeaza cont</a>
+        <a [routerLink]="['/forgot-password']" class="small-text ion-padding-top">Ai uitat parola?</a>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
