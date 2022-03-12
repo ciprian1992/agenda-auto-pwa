@@ -3,10 +3,56 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Inregistreaza-te</ion-title>
+    <ion-title>Creeaza cont</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="formGroup">
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [formControl]="emailControl" type="text" required></ion-input>
+    </ion-item>
+    <ng-container *ngIf="emailControl.touched">
+      <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.required">
+        Te rugăm să completezi adresa de e-mail
+      </ion-text>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.email">
+        Adresă de e-mail invalidă
+      </ion-text>
+    </ng-container>
+    <ion-item lines="full">
+      <ion-label position="floating">Parola</ion-label>
+      <ion-input [formControl]="passwordControl" type="password" required></ion-input>
+    </ion-item>
+    <ng-container *ngIf="passwordControl.touched">
+      <ion-text class="ion-padding-start" color="danger" *ngIf="passwordControl.errors?.required">
+        Te rugăm să completezi parola
+      </ion-text>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="passwordControl.errors?.minlength">
+        Parolă prea scurta. Minim 6 caractere
+      </ion-text>
+    </ng-container>
 
+    <ion-item lines="full">
+      <ion-label position="floating">Confirmare parola</ion-label>
+      <ion-input [formControl]="passwordConfirmControl" type="password" required></ion-input>
+    </ion-item>
+    <ng-container *ngIf="passwordConfirmControl.touched">
+      <ion-text class="ion-padding-start" color="danger" *ngIf="passwordConfirmControl.errors?.required">
+        Te rugăm să confirmi parola
+      </ion-text>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="passwordConfirmControl.errors?.notSame">
+        Parolele nu coincid
+      </ion-text>
+    </ng-container>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="registrationError">{{registrationError}}</ion-text>
+    <ion-row>
+      <ion-col class="actions-container">
+        <ion-button (click)="register()" type="submit" color="danger" expand="block">Creare cont</ion-button>
+        <a [routerLink]="['/login']" class="small-text ion-padding-top">Ai deja un cont?</a>
+        <a [routerLink]="['/forgot-password']" class="small-text ion-padding-top">Ai uitat parola?</a>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
