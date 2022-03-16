@@ -7,10 +7,17 @@
           <ion-note>agenda.auto.app@gmail.com</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of (appPages$ | async); let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
+
+              <ion-item *ngIf="p.url; else elseBlock" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            <ng-template #elseBlock>
+              <ion-item lines="none" detail="false" (click)="p?.action()">
+                <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ng-template>
           </ion-menu-toggle>
         </ion-list>
 

@@ -5,20 +5,33 @@
 </ion-header>
 
 <ion-content>
-  <form>
+  <form [formGroup]="formGroup">
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
+      <ion-input [formControl]="emailControl" type="text" required></ion-input>
     </ion-item>
+    <ng-container *ngIf="emailControl.touched">
+      <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.required">
+        Te rugăm să completezi adresa de e-mail
+      </ion-text>
+      <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.email">
+        Adresă de e-mail invalidă
+      </ion-text>
+    </ng-container>
 
     <ion-item lines="full">
       <ion-label position="floating">Parola</ion-label>
-      <ion-input type="password" required></ion-input>
+      <ion-input [formControl]="passwordControl" type="password" required></ion-input>
     </ion-item>
-
+    <ng-container *ngIf="passwordControl.touched">
+      <ion-text class="ion-padding-start" color="danger" *ngIf="passwordControl.errors?.required">
+        Te rugăm să completezi parola
+      </ion-text>
+    </ng-container>
+    <ion-text class="ion-padding-start" color="danger" *ngIf="signInError">{{signInError}}</ion-text>
     <ion-row>
       <ion-col class="actions-container">
-        <ion-button type="submit" color="danger" expand="block">Intra in cont</ion-button>
+        <ion-button (click)="signIn()" type="submit" color="danger" expand="block">Intra in cont</ion-button>
         <a [routerLink]="['/register']" class="small-text ion-padding-top">Utilizator nou? Creeaza cont</a>
         <a [routerLink]="['/forgot-password']" class="small-text ion-padding-top">Ai uitat parola?</a>
       </ion-col>
