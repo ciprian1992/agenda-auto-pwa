@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon';
 
 export interface Document {
+  id: string;
   beginDate: DateTime;
-  endDate: string;
+  expirationDate: DateTime;
   type: string;
   description: string;
 }

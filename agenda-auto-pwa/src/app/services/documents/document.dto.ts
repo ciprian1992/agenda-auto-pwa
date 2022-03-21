@@ -1,6 +1,8 @@
 export interface DocumentDto {
-  beginDate: string;
-  endDate: string;
+  _id: string;
+  _creationTimestamp: number;
+  beginTimestamp: number;
+  expirationTimestamp: number;
   type: string;
   description: string;
 }

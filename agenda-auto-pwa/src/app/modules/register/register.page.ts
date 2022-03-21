@@ -7,7 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, Subscription } from 'rxjs';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +38,11 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(public auth: AngularFireAuth, private readonly router: Router) {}
+  constructor(
+    public auth: AngularFireAuth,
+    private readonly router: Router,
+    private afs: AngularFirestore
+  ) {}
 
   public ngOnInit() {
     this.passwordConfirmControl.setValidators([
@@ -61,8 +67,22 @@ export class RegisterPage implements OnInit, OnDestroy {
           this.passwordControl.value
         )
       ).subscribe(
-        () => {
-          this.router.navigate(['/login']);
+        (userCredential) => {
+          const userUid = userCredential.user.uid; // The UID of the user.
+          const email = userCredential.user.email; // The email of the user.
+          const displayName = userCredential.user.displayName; // The display name of the user.
+
+          const account = {
+            useruid: userUid,
+            email,
+            displayName,
+            creationDate: DateTime.now().toString(),
+            creationTimeStamp: DateTime.now().toMillis(),
+          };
+
+          this.afs.collection('users').doc(userUid).set(account);
+
+          this.router.navigate(['/dashboard']);
         },
         (error: { code: string; message: string }) => {
           const errorCode = error.code;
