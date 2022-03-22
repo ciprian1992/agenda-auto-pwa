@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon';
+import { CarDocumentType } from './car-document-type.enum';
 
 export interface Document {
   id: string;
   beginDate: DateTime;
   expirationDate: DateTime;
-  type: string;
+  type: CarDocumentType;
   description: string;
 }

@@ -8,15 +8,18 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Panou principal</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
-    <div class="logo" style="background-color: blue"></div>
-    <div class="consumables" style="background-color: green"></div>
-    <div class="documents" style="background-color: red"></div>
+    <div class="title-container">
+      <div class="logo">
+      </div>
+      <div class="title">
+        Agenda auto
+      </div>
+    </div>
+    <div class="consumables"></div>
+    <div class="documents ion-padding">
+      <div class="documents-title ion-text-center">DOCUMENTE</div>
+      <div class="documents-subtitle">Documente care expira curand</div>
+    </div>
   </div>
 </ion-content>

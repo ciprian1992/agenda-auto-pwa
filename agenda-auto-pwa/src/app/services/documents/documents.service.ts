@@ -1,25 +1,89 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
 import { DocumentDto } from './document.dto';
 import { Document } from './document';
 import { DateTime } from 'luxon';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, take, tap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import { CarDocumentType } from './car-document-type.enum';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentsService {
-  private collection;
+  private collection = 'documents';
+  private fetchDataSubject = new ReplaySubject(1);
 
-  constructor(private afs: AngularFirestore) {}
+  public documents$: Observable<Document[]>;
+
+  constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {}
+
+  // private fetchDocuments() {
+  //   this.auth.user
+  //   .pipe(
+  //     mergeMap((user) => this.getDocuments(user.uid)),
+  //   )
+  //   .subscribe(
+  //     () =>
+  //   );
+  // }
 
   public getDocuments(userId: string): Observable<Document[]> {
-    //this.afs.createId();
-    //this.afs.collection(this.collection).doc(this.afs.createId())
+    return of([
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+      {
+        id: '1',
+        beginDate: DateTime.local(),
+        expirationDate: DateTime.local(),
+        type: CarDocumentType.INSURANCE,
+        description: '',
+      },
+    ]);
 
     return this.afs
-      .collection<DocumentDto>('documents', (ref) =>
-        ref.where('userId', '==', userId)
-      )
+      .collection('users')
+      .doc(userId)
+      .collection<DocumentDto>(this.collection)
       .valueChanges()
       .pipe(
         map((documents) =>
@@ -34,7 +98,7 @@ export class DocumentsService {
       id: '',
       beginDate: DateTime.fromMillis(documentDto.beginTimestamp),
       expirationDate: DateTime.fromMillis(documentDto.expirationTimestamp),
-      type: documentDto.type,
+      type: CarDocumentType[documentDto.type],
       description: documentDto.description,
     };
   }
