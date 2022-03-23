@@ -20,6 +20,12 @@
     <div class="documents ion-padding">
       <div class="documents-title ion-text-center">DOCUMENTE</div>
       <div class="documents-subtitle">Documente care expira curand</div>
+      <div class="documents-container">
+        <div class="document" *ngFor="let document of (documents$ | async)">
+          <div>RCA</div>
+          <div>{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

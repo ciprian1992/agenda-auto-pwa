@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { mergeMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { DocumentsService } from 'src/app/services/documents/documents.service';
+import { Document } from 'src/app/services/documents/document';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,17 +10,21 @@ import { DocumentsService } from 'src/app/services/documents/documents.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-  constructor(
-    public auth: AngularFireAuth,
-    readonly documentsService: DocumentsService
-  ) {}
+  documents$: Observable<Document[]>;
 
-  ngOnInit() {
-    this.auth.user
-      .pipe(
-        mergeMap((user) => this.documentsService.getDocuments(user.uid)),
-        tap(console.log)
+  constructor(readonly documentsService: DocumentsService) {
+    this.documents$ = this.documentsService.documents$.pipe(
+      map((documents) =>
+        documents
+          .sort(
+            (documentA, documentB) =>
+              documentA.expirationDate.toMillis() -
+              documentB.expirationDate.toMillis()
+          )
+          .slice(0, 6)
       )
-      .subscribe();
+    );
   }
+
+  ngOnInit() {}
 }

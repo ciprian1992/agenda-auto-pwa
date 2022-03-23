@@ -4,7 +4,14 @@ import { DocumentDto } from './document.dto';
 import { Document } from './document';
 import { DateTime } from 'luxon';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, mergeMap } from 'rxjs/operators';
+import {
+  filter,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { CarDocumentType } from './car-document-type.enum';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -15,17 +22,22 @@ export class DocumentsService {
 
   public documents$: Observable<Document[]>;
 
-  constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {}
+  constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {
+    this.documents$ = combineLatest([
+      this.fetchDataSubject,
+      this.auth.user,
+    ]).pipe(
+      filter(([_, user]) => !!user),
+      mergeMap(([_, user]) => this.getDocuments(user.uid)),
+      shareReplay()
+    );
 
-  // private fetchDocuments() {
-  //   this.auth.user
-  //   .pipe(
-  //     mergeMap((user) => this.getDocuments(user.uid)),
-  //   )
-  //   .subscribe(
-  //     () =>
-  //   );
-  // }
+    this.fetchDocuments();
+  }
+
+  public fetchDocuments() {
+    this.fetchDataSubject.next();
+  }
 
   public getDocuments(userId: string): Observable<Document[]> {
     return of([
@@ -39,42 +51,42 @@ export class DocumentsService {
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 1 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 2 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 3 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 4 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 5 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },
       {
         id: '1',
         beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
+        expirationDate: DateTime.local().plus({ days: 6 }),
         type: CarDocumentType.INSURANCE,
         description: '',
       },

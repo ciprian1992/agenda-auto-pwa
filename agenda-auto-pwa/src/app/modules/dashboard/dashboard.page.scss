@@ -50,6 +50,7 @@ ion-menu-button {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    min-height: 0px;
 
     .documents-title {
       font-size: 20px;
@@ -59,6 +60,24 @@ ion-menu-button {
     .documents-subtitle {
       color: #f6c792;
       font-size: 14px;
+      margin-left: 4px;
+    }
+
+    .documents-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 4px 0px;
+      overflow-y: auto;
+
+      .document {
+        display: flex;
+        flex-direction: row;
+        height: 24px;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
     }
   }
 }
