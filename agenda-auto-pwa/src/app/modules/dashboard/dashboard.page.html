@@ -21,11 +21,22 @@
       <div class="documents-title ion-text-center">DOCUMENTE</div>
       <div class="documents-subtitle">Documente care expira curand</div>
       <div class="documents-container">
-        <div class="document" *ngFor="let document of (documents$ | async)">
-          <div>RCA</div>
-          <div>{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
-        </div>
+          <div class="document" *ngFor="let document of (documents$ | async)">
+            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>RCA</div>
+            <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
+          </div>
       </div>
     </div>
   </div>
+
+  <!-- fab placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="tertiary"><ion-icon name="construct"></ion-icon></ion-fab-button>
+      <ion-fab-button color="tertiary" (click)="navigateToAddDocument()"><ion-icon name="document"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

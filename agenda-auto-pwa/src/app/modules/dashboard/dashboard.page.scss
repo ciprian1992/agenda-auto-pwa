@@ -37,6 +37,10 @@ ion-menu-button {
     }
   }
 
+  .alarm-icon {
+    color: var(--ion-color-tertiary);
+  }
+
   .consumables {
     flex: 0 0 30%;
     align-self: stretch;
@@ -58,7 +62,7 @@ ion-menu-button {
     }
 
     .documents-subtitle {
-      color: #f6c792;
+      color: var(--ion-color-tertiary);
       font-size: 14px;
       margin-left: 4px;
     }
@@ -68,7 +72,7 @@ ion-menu-button {
       flex-direction: column;
       gap: 16px;
       padding: 4px 0px;
-      overflow-y: auto;
+      overflow: hidden;
 
       .document {
         display: flex;
@@ -77,6 +81,12 @@ ion-menu-button {
         justify-content: space-between;
         align-items: center;
         font-size: 14px;
+
+        .left {
+          gap: 4px;
+          display: flex;
+          align-items: center;
+        }
       }
     }
   }

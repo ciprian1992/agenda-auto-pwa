@@ -56,7 +56,11 @@ const routes: Routes = [
       import('./modules/forgot-password/forgot-password.module').then(
         (m) => m.ForgotPasswordPageModule
       ),
+  },  {
+    path: 'add-document',
+    loadChildren: () => import('./modules/add-document/add-document.module').then( m => m.AddDocumentPageModule)
   },
+
 ];
 
 @NgModule({
