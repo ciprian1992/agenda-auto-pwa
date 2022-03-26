@@ -1,9 +1,60 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>add-document</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Adauga document</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+      <form class="content" [formGroup]="formGroup">
+        <ion-item>
+          <ion-label>Tip Document</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option value="m">Male</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pret</ion-label>
+          <ion-input type="number" placeholder="Introduceti pretul"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Informatii aditionale</ion-label>
+          <ion-input placeholder="Introduceti informatii"></ion-input>
+        </ion-item>
+        <ion-text>Valabilitate:</ion-text>
+        <ion-item>
+          <div class="date-picker-container">
+          <!-- Datetime in overlay -->
+            <ion-label class="label">De la*</ion-label>
+            <ion-text>{{dateBeginControl?.value | dateFormat : 'd.M.y'}}</ion-text>
+            <ion-button id="open-modal-begin" color="tertiary">Alege</ion-button>
+              <ion-modal #beginModal trigger="open-modal-begin">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime [formControl]="dateBeginControl" (ionChange)="beginModal.dismiss()" [presentation]="'date'"></ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+          </div>
+        </ion-item>
+        <ion-item>
+          <!-- Datetime in overlay -->
+        <div class="date-picker-container">
+          <ion-label class="label">Pana la*</ion-label>
+          <ion-text>{{dateExpirationControl?.value | dateFormat : 'd.M.y'}}</ion-text>
+          <ion-button id="open-modal-expiration" color="tertiary">Alege</ion-button>
+            <ion-modal #expirationModal trigger="open-modal-expiration">
+              <ng-template>
+                <ion-content>
+                  <ion-datetime [min]='dateExpirationControl.value' [formControl]="dateExpirationControl" (ionChange)="expirationModal.dismiss()" [presentation]="'date'"></ion-datetime>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
+        </div>
+        </ion-item>
+        <ion-button class="add-button" color="tertiary">Adauga</ion-button>
+      </form>
 </ion-content>

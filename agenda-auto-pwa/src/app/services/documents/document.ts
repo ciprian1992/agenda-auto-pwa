@@ -7,4 +7,5 @@ export interface Document {
   expirationDate: DateTime;
   type: CarDocumentType;
   description: string;
+  price: number;
 }

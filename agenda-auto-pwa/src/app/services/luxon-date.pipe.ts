@@ -5,12 +5,23 @@ import { DateTime } from 'luxon';
   name: 'dateFormat',
 })
 export class LuxonDatePipe implements PipeTransform {
-  transform(value: DateTime | Date, format: string = 'DATE_SHORT'): any {
+  transform(
+    value: DateTime | Date | string,
+    format: string = 'DATE_SHORT'
+  ): any {
     let dateTimeToUse: DateTime;
+
+    if (!value) {
+      return '';
+    }
+
     if (value instanceof Date) {
       dateTimeToUse = DateTime.fromJSDate(value);
-    } else {
+    }
+    if (value instanceof DateTime) {
       dateTimeToUse = value;
+    } else {
+      dateTimeToUse = DateTime.fromISO(value);
     }
 
     return dateTimeToUse.toFormat(format);

@@ -5,4 +5,5 @@ export interface DocumentDto {
   expirationTimestamp: number;
   type: string;
   description: string;
+  price: number;
 }

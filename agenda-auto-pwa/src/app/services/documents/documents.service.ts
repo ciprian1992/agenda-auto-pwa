@@ -47,6 +47,7 @@ export class DocumentsService {
         expirationDate: DateTime.local(),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -54,6 +55,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 1 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -61,6 +63,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 2 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -68,6 +71,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 3 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -75,6 +79,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 4 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -82,6 +87,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 5 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
       {
         id: '1',
@@ -89,6 +95,7 @@ export class DocumentsService {
         expirationDate: DateTime.local().plus({ days: 6 }),
         type: CarDocumentType.INSURANCE,
         description: '',
+        price: 100,
       },
     ]);
 
@@ -112,6 +119,7 @@ export class DocumentsService {
       expirationDate: DateTime.fromMillis(documentDto.expirationTimestamp),
       type: CarDocumentType[documentDto.type],
       description: documentDto.description,
+      price: documentDto.price,
     };
   }
 }

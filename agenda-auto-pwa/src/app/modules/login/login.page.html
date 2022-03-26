@@ -31,7 +31,7 @@
     <ion-text class="ion-padding-start" color="danger" *ngIf="signInError">{{signInError}}</ion-text>
     <ion-row>
       <ion-col class="actions-container">
-        <ion-button (click)="signIn()" type="submit" color="danger" expand="block">Intra in cont</ion-button>
+        <ion-button (click)="signIn()" type="submit" color="tertiary" expand="block">Intra in cont</ion-button>
         <a [routerLink]="['/register']" class="small-text ion-padding-top">Utilizator nou? Creeaza cont</a>
         <a [routerLink]="['/forgot-password']" class="small-text ion-padding-top">Ai uitat parola?</a>
       </ion-col>

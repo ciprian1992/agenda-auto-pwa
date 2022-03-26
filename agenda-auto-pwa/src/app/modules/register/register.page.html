@@ -49,7 +49,7 @@
     <ion-text class="ion-padding-start" color="danger" *ngIf="registrationError">{{registrationError}}</ion-text>
     <ion-row>
       <ion-col class="actions-container">
-        <ion-button (click)="register()" type="submit" color="danger" expand="block">Creare cont</ion-button>
+        <ion-button (click)="register()" type="submit" color="tertiary" expand="block">Creare cont</ion-button>
         <a [routerLink]="['/login']" class="small-text ion-padding-top">Ai deja un cont?</a>
         <a [routerLink]="['/forgot-password']" class="small-text ion-padding-top">Ai uitat parola?</a>
       </ion-col>
