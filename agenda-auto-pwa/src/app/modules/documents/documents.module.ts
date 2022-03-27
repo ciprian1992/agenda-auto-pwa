@@ -7,14 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { DocumentsPageRoutingModule } from './documents-routing.module';
 
 import { DocumentsPage } from './documents.page';
+import { LuxonDatePipe } from 'src/app/services/luxon-date.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DocumentsPageRoutingModule
-  ],
-  declarations: [DocumentsPage]
+  imports: [CommonModule, FormsModule, IonicModule, DocumentsPageRoutingModule],
+  declarations: [DocumentsPage, LuxonDatePipe],
 })
 export class DocumentsPageModule {}

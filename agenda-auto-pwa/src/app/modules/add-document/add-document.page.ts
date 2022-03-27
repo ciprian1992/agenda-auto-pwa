@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
+import { EMPTY, Subject, Subscription } from 'rxjs';
+import { mergeMap, withLatestFrom } from 'rxjs/operators';
+import { CarDocumentType } from 'src/app/services/documents/car-document-type.enum';
+import { Document } from 'src/app/services/documents/document';
+import { DocumentsService } from 'src/app/services/documents/documents.service';
 
 @Component({
   selector: 'app-add-document',
   templateUrl: './add-document.page.html',
   styleUrls: ['./add-document.page.scss'],
 })
-export class AddDocumentPage implements OnInit {
-  public descriptionControl = new FormControl('', [Validators.required]);
+export class AddDocumentPage {
+  public descriptionControl = new FormControl('');
   public documentTypeControl = new FormControl('', [Validators.required]);
-  public priceControl = new FormControl('', [Validators.required]);
+  public priceControl = new FormControl('');
   public dateBeginControl = new FormControl(DateTime.local(), [
     Validators.required,
   ]);
   public dateExpirationControl = new FormControl(DateTime.local(), [
     Validators.required,
   ]);
+  public documentTypes = Object.keys(CarDocumentType);
 
   public formGroup = new FormGroup({
     description: this.descriptionControl,
@@ -26,9 +34,54 @@ export class AddDocumentPage implements OnInit {
     dateExpiration: this.dateExpirationControl,
   });
 
-  constructor() {}
+  private addDocumentSubject = new Subject();
+  private subscriptions = new Subscription();
 
-  ngOnInit() {}
+  constructor(
+    private readonly documentsService: DocumentsService,
+    public readonly auth: AngularFireAuth,
+    private readonly router: Router
+  ) {
+    this.subscriptions.add(
+      this.addDocumentSubject
+        .pipe(
+          withLatestFrom(this.auth.user),
+          mergeMap(([_, { uid }]) => {
+            this.formGroup.markAllAsTouched();
+            this.formGroup.updateValueAndValidity();
+            if (this.formGroup.valid) {
+              return this.documentsService.addDocument(
+                uid,
+                this.extractDocumentFromForm()
+              );
+            }
 
-  public show() {}
+            return EMPTY;
+          })
+        )
+        .subscribe(() => {
+          this.documentsService.fetchDocuments();
+          this.router.navigate(['dashboard']);
+        })
+    );
+  }
+
+  public addDocument(): void {
+    this.addDocumentSubject.next();
+  }
+
+  private extractDocumentFromForm(): Document {
+    return {
+      id: '',
+      beginDate: DateTime.fromISO(this.dateBeginControl.value),
+      expirationDate: DateTime.fromISO(this.dateExpirationControl.value),
+      type: this.documentTypeControl.value,
+      description: this.descriptionControl.value,
+      price: this.priceControl.value,
+    };
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

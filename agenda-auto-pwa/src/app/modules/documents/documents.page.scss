@@ -26,3 +26,31 @@ ion-menu-button {
 #container a {
   text-decoration: none;
 }
+
+ion-header {
+  background-color: var(--ion-toolbar-background);
+
+  .header-next-events {
+    display: flex;
+    flex-direction: column;
+
+    .document {
+      display: flex;
+      flex-direction: row;
+      height: 24px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+
+      .left {
+        gap: 4px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .alarm-icon {
+    color: var(--ion-color-tertiary);
+  }
+}

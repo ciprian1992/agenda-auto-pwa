@@ -1,3 +1,5 @@
 export enum CarDocumentType {
-  INSURANCE = 'insurance',
+  INSURANCE = 'INSURANCE',
+  RCA = 'RCA',
+  VIGNETE = 'VIGNETE',
 }

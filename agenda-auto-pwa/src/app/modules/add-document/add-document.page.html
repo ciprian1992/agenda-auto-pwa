@@ -10,19 +10,25 @@
 <ion-content>
       <form class="content" [formGroup]="formGroup">
         <ion-item>
-          <ion-label>Tip Document</ion-label>
-          <ion-select placeholder="Select One">
-            <ion-select-option value="f">Female</ion-select-option>
-            <ion-select-option value="m">Male</ion-select-option>
+          <ion-label>Tip Document*</ion-label>
+          <ion-select interface="popover" [formControl]="documentTypeControl" placeholder="Select One">
+            <ion-select-option [value]="documentType" *ngFor="let documentType of documentTypes">
+              {{documentType}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
+        <ng-container *ngIf="documentTypeControl.touched">
+          <ion-text class="ion-padding-start" color="danger" *ngIf="documentTypeControl.errors?.required">
+            Te rugăm să selectezi un tip de document
+          </ion-text>
+        </ng-container>
         <ion-item>
           <ion-label>Pret</ion-label>
-          <ion-input type="number" placeholder="Introduceti pretul"></ion-input>
+          <ion-input [formControl]="priceControl" type="number" placeholder="Introduceti pretul"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Informatii aditionale</ion-label>
-          <ion-input placeholder="Introduceti informatii"></ion-input>
+          <ion-input [formControl]="descriptionControl" placeholder="Introduceti informatii"></ion-input>
         </ion-item>
         <ion-text>Valabilitate:</ion-text>
         <ion-item>
@@ -55,6 +61,6 @@
             </ion-modal>
         </div>
         </ion-item>
-        <ion-button class="add-button" color="tertiary">Adauga</ion-button>
+        <ion-button class="add-button" color="tertiary" (click)="addDocument()">Adauga</ion-button>
       </form>
 </ion-content>

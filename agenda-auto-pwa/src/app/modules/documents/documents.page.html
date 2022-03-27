@@ -3,8 +3,16 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Documents</ion-title>
+    <ion-title>Documente</ion-title>
   </ion-toolbar>
+
+  <div class="ion-padding header-next-events">
+    <ion-text color="tertiary"> Urmatoarele evenimente</ion-text>
+    <div class="document" *ngFor="let document of (documents$ | async) | slice: 0:3">
+      <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{document.type }}</div>
+      <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -15,7 +23,6 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">Documents</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
   </div>
 </ion-content>

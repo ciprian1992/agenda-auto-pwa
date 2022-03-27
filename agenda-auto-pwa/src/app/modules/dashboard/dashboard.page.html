@@ -17,12 +17,12 @@
       </div>
     </div>
     <div class="consumables"></div>
-    <div class="documents ion-padding">
+    <div class="documents ion-padding" (click)="navigateToDocuments()">
       <div class="documents-title ion-text-center">DOCUMENTE</div>
       <div class="documents-subtitle">Documente care expira curand</div>
       <div class="documents-container">
           <div class="document" *ngFor="let document of (documents$ | async)">
-            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>RCA</div>
+            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{document.type }}</div>
             <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
           </div>
       </div>

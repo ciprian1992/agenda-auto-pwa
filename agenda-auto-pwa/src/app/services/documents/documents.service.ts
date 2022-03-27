@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
+import { combineLatest, from, Observable, of, ReplaySubject } from 'rxjs';
 import { DocumentDto } from './document.dto';
 import { Document } from './document';
 import { DateTime } from 'luxon';
@@ -40,65 +40,6 @@ export class DocumentsService {
   }
 
   public getDocuments(userId: string): Observable<Document[]> {
-    return of([
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local(),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 1 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 2 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 3 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 4 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 5 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-      {
-        id: '1',
-        beginDate: DateTime.local(),
-        expirationDate: DateTime.local().plus({ days: 6 }),
-        type: CarDocumentType.INSURANCE,
-        description: '',
-        price: 100,
-      },
-    ]);
-
     return this.afs
       .collection('users')
       .doc(userId)
@@ -111,15 +52,61 @@ export class DocumentsService {
       );
   }
 
+  public addDocument(userId: string, document: Document): Observable<void> {
+    const id = this.afs.createId();
+
+    return from(
+      this.afs
+        .collection('users')
+        .doc(userId)
+        .collection<DocumentDto>(this.collection)
+        .doc(id)
+        .set(this.mapToDocumentDto({ ...document, id }))
+    );
+  }
+
+  public updateDocument(userId: string, document: Document): Observable<void> {
+    return from(
+      this.afs
+        .collection('users')
+        .doc(userId)
+        .collection<DocumentDto>(this.collection)
+        .doc(document.id)
+        .set(this.mapToDocumentDto({ ...document }))
+    );
+  }
+
+  public deleteDocument(userId: string, documentId: string): Observable<void> {
+    return from(
+      this.afs
+        .collection('users')
+        .doc(userId)
+        .collection<DocumentDto>(this.collection)
+        .doc(documentId)
+        .delete()
+    );
+  }
+
   private mapToDocument(documentDto: DocumentDto): Document {
     return {
-      //id: documentDto._id,
-      id: '',
+      id: documentDto._id,
       beginDate: DateTime.fromMillis(documentDto.beginTimestamp),
       expirationDate: DateTime.fromMillis(documentDto.expirationTimestamp),
       type: CarDocumentType[documentDto.type],
       description: documentDto.description,
       price: documentDto.price,
+    };
+  }
+
+  private mapToDocumentDto(document: Document): DocumentDto {
+    return {
+      _id: document.id,
+      _creationTimestamp: DateTime.local().toMillis(),
+      beginTimestamp: document.beginDate.toMillis(),
+      expirationTimestamp: document.expirationDate.toMillis(),
+      type: document.type,
+      description: document.description,
+      price: document.price,
     };
   }
 }

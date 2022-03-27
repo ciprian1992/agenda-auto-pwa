@@ -30,6 +30,10 @@ export class DashboardPage implements OnInit {
     );
   }
 
+  public navigateToDocuments() {
+    this.router.navigate(['documents']);
+  }
+
   public navigateToAddDocument() {
     this.router.navigate(['add-document']);
   }
