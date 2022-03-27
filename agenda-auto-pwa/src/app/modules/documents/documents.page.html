@@ -25,7 +25,7 @@
   <div id="container">
     <div class="container-document ion-padding ion-margin" *ngFor="let document of (documents$ | async)">
       <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteDocument(document.id)"></ion-icon>
-      <ion-title class="ion-text-center">{{ document.type}}</ion-title>
+      <div class="ion-text-center">{{ document.type}}</div>
       <div class="progress-bar-header">
         <div class="date">{{ document.beginDate | dateFormat : 'd.M.y'}}</div>
         <div class="date">{{ document.expirationDate | dateFormat : 'd.M.y'}}</div>
