@@ -47,6 +47,11 @@
           </div>
         </ion-item>
         <ion-item>
+          <ng-container *ngIf="dateExpirationControl.touched">
+            <ion-text class="ion-padding-start" color="danger" *ngIf="dateBeginControl.errors?.datesWrong">
+              Data inceput mai mare decat data expirare
+            </ion-text>
+          </ng-container>
           <!-- Datetime in overlay -->
         <div class="date-picker-container">
           <ion-label class="label">Pana la*</ion-label>
@@ -55,12 +60,17 @@
             <ion-modal #expirationModal trigger="open-modal-expiration">
               <ng-template>
                 <ion-content>
-                  <ion-datetime [min]='dateExpirationControl.value' [formControl]="dateExpirationControl" (ionChange)="expirationModal.dismiss()" [presentation]="'date'"></ion-datetime>
+                  <ion-datetime [formControl]="dateExpirationControl" (ionChange)="expirationModal.dismiss()" [presentation]="'date'"></ion-datetime>
                 </ion-content>
               </ng-template>
             </ion-modal>
         </div>
         </ion-item>
+        <ng-container *ngIf="dateExpirationControl.touched">
+          <ion-text class="ion-padding-start" color="danger" *ngIf="dateExpirationControl.errors?.datesWrong">
+            Data expirare mai mica decat data inceput
+          </ion-text>
+        </ng-container>
         <ion-button class="add-button" color="tertiary" (click)="addDocument()">Adauga</ion-button>
       </form>
 </ion-content>

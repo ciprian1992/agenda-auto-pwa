@@ -18,15 +18,7 @@ export class DashboardPage implements OnInit {
     readonly router: Router
   ) {
     this.documents$ = this.documentsService.documents$.pipe(
-      map((documents) =>
-        documents
-          .sort(
-            (documentA, documentB) =>
-              documentA.expirationDate.toMillis() -
-              documentB.expirationDate.toMillis()
-          )
-          .slice(0, 6)
-      )
+      map((documents) => documents.slice(0, 6))
     );
   }
 

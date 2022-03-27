@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { EMPTY, Subject, Subscription } from 'rxjs';
@@ -14,7 +19,7 @@ import { DocumentsService } from 'src/app/services/documents/documents.service';
   templateUrl: './add-document.page.html',
   styleUrls: ['./add-document.page.scss'],
 })
-export class AddDocumentPage {
+export class AddDocumentPage implements OnInit {
   public descriptionControl = new FormControl('');
   public documentTypeControl = new FormControl('', [Validators.required]);
   public priceControl = new FormControl('');
@@ -64,6 +69,25 @@ export class AddDocumentPage {
           this.router.navigate(['dashboard']);
         })
     );
+  }
+
+  public ngOnInit() {
+    this.dateBeginControl.setValidators([
+      Validators.required,
+      this.checkDates.bind(this),
+    ]);
+
+    this.dateExpirationControl.setValidators([
+      Validators.required,
+      this.checkDates.bind(this),
+    ]);
+  }
+
+  private checkDates(): ValidationErrors | null {
+    const beginDate = DateTime.fromISO(this.dateBeginControl.value);
+    const expirationDate = DateTime.fromISO(this.dateExpirationControl.value);
+
+    return beginDate <= expirationDate ? null : { datesWrong: true };
   }
 
   public addDocument(): void {

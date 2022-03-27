@@ -8,7 +8,7 @@
 
   <div class="ion-padding header-next-events">
     <ion-text color="tertiary"> Urmatoarele evenimente</ion-text>
-    <div class="document" *ngFor="let document of (documents$ | async) | slice: 0:3">
+    <div class="header-document" *ngFor="let document of (documents$ | async) | slice: 0:3">
       <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{document.type }}</div>
       <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
     </div>
@@ -23,6 +23,23 @@
   </ion-header>
 
   <div id="container">
-
+    <div class="container-document ion-padding ion-margin" *ngFor="let document of (documents$ | async)">
+      <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteDocument(document.id)"></ion-icon>
+      <ion-title class="ion-text-center">{{ document.type}}</ion-title>
+      <div class="progress-bar-header">
+        <div class="date">{{ document.beginDate | dateFormat : 'd.M.y'}}</div>
+        <div class="date">{{ document.expirationDate | dateFormat : 'd.M.y'}}</div>
+      </div>
+      <div class="progress-bar ion-margin-bottom">
+        <div class="filled" [style.width.%]="document.percentagePassed"></div>
+        <div class="progress-bar-text ion-text-center">{{ document.daysRemaining}} zile ramase</div>
+      </div>
+    </div>
   </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navigateToAddDocument()" color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

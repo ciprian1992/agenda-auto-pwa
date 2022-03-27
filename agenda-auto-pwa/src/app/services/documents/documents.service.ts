@@ -43,7 +43,9 @@ export class DocumentsService {
     return this.afs
       .collection('users')
       .doc(userId)
-      .collection<DocumentDto>(this.collection)
+      .collection<DocumentDto>(this.collection, (ref) =>
+        ref.orderBy('expirationTimestamp', 'desc')
+      )
       .valueChanges()
       .pipe(
         map((documents) =>
