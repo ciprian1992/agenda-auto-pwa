@@ -16,12 +16,21 @@
         Agenda auto
       </div>
     </div>
-    <div class="consumables"></div>
-    <div class="documents ion-padding" (click)="navigateToDocuments()">
-      <div class="documents-title ion-text-center">DOCUMENTE</div>
-      <div class="documents-subtitle">Documente care expira curand</div>
-      <div class="documents-container">
-          <div class="document" *ngFor="let document of (documents$ | async)">
+    <div class="items-card ion-padding" (click)="navigateToConsumables()">
+      <div class="items-card-title ion-text-center">CONSUMABILE</div>
+      <div class="items-card-subtitle">Consumabile care expira curand</div>
+      <div class="items-card-container">
+          <div class="item" *ngFor="let consumable of (consumables$ | async)">
+            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{consumable.type }}</div>
+            <div class="right">{{ consumable.expirationDate| dateFormat : 'd.M.y' }}</div>
+          </div>
+      </div>
+    </div>
+    <div class="items-card ion-padding" (click)="navigateToDocuments()">
+      <div class="items-card-title ion-text-center">DOCUMENTE</div>
+      <div class="items-card-subtitle">Documente care expira curand</div>
+      <div class="items-card-container">
+          <div class="item" *ngFor="let document of (documents$ | async)">
             <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{document.type }}</div>
             <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
           </div>
@@ -35,7 +44,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="tertiary"><ion-icon name="construct"></ion-icon></ion-fab-button>
+      <ion-fab-button color="tertiary" (click)="navigateToAddConsumable()"><ion-icon name="construct"></ion-icon></ion-fab-button>
       <ion-fab-button color="tertiary" (click)="navigateToAddDocument()"><ion-icon name="document"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>

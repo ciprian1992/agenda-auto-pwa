@@ -41,12 +41,8 @@ ion-menu-button {
     color: var(--ion-color-tertiary);
   }
 
-  .consumables {
+  .items-card {
     flex: 0 0 30%;
-    align-self: stretch;
-  }
-
-  .documents {
     background-color: var(--ion-card-background);
     border-radius: 4px;
     flex: 0 0 30%;
@@ -56,25 +52,25 @@ ion-menu-button {
     gap: 4px;
     min-height: 0px;
 
-    .documents-title {
+    .items-card-title {
       font-size: 20px;
       font-weight: 500;
     }
 
-    .documents-subtitle {
+    .items-card-subtitle {
       color: var(--ion-color-tertiary);
       font-size: 14px;
       margin-left: 4px;
     }
 
-    .documents-container {
+    .items-card-container {
       display: flex;
       flex-direction: column;
       gap: 16px;
       padding: 4px 0px;
       overflow: hidden;
 
-      .document {
+      .item {
         display: flex;
         flex-direction: row;
         height: 24px;

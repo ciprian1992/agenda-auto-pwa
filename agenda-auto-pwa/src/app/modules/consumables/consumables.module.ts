@@ -7,14 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ConsumablesPageRoutingModule } from './consumables-routing.module';
 
 import { ConsumablesPage } from './consumables.page';
+import { LuxonDatePipe } from 'src/app/services/luxon-date.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConsumablesPageRoutingModule
+    ConsumablesPageRoutingModule,
   ],
-  declarations: [ConsumablesPage]
+  declarations: [ConsumablesPage, LuxonDatePipe],
 })
 export class ConsumablesPageModule {}
