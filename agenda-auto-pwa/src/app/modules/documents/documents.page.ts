@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { DocumentsService } from 'src/app/services/documents/documents.service';
+import { DocumentsService } from 'src/app/services/data/documents/documents.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { DocumentVm } from './document-vm';
 import { map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';

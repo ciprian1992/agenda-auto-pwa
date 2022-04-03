@@ -8,8 +8,9 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ConsumablesService } from 'src/app/services/consumables/consumables.service';
-import { ConsumableVm } from './consumable-vm';
+import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
+import { ConsumableVm } from 'src/app/services/ui/consumable-vm';
+import { ConsumablesVmService } from 'src/app/services/ui/consumables-vm.service';
 
 @Component({
   selector: 'app-consumables',
@@ -25,13 +26,10 @@ export class ConsumablesPage implements OnDestroy {
   constructor(
     public readonly auth: AngularFireAuth,
     private readonly consumablesService: ConsumablesService,
+    private readonly consumablesVmService: ConsumablesVmService,
     private readonly router: Router
   ) {
-    this.consumables$ = this.consumablesService.consumables$.pipe(
-      map((consumables) =>
-        consumables.map((consumable) => new ConsumableVm(consumable))
-      )
-    );
+    this.consumables$ = this.consumablesVmService.consumablesVm$;
 
     this.subscriptiosn.add(
       this.deleteConsumableSubject

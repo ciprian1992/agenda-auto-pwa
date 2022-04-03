@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DocumentsService } from 'src/app/services/documents/documents.service';
-import { Document } from 'src/app/services/documents/document';
+import { DocumentsService } from 'src/app/services/data/documents/documents.service';
+import { Document } from 'src/app/services/data/documents/document';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ConsumablesService } from 'src/app/services/consumables/consumables.service';
-import { Consumable } from 'src/app/services/consumables/consumable.interface';
+import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
+import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
 
 @Component({
   selector: 'app-dashboard',

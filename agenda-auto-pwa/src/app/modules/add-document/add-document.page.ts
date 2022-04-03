@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { EMPTY, Subject, Subscription } from 'rxjs';
 import { mergeMap, withLatestFrom } from 'rxjs/operators';
-import { CarDocumentType } from 'src/app/services/documents/car-document-type.enum';
-import { Document } from 'src/app/services/documents/document';
-import { DocumentsService } from 'src/app/services/documents/documents.service';
+import { CarDocumentType } from 'src/app/services/data/documents/car-document-type.enum';
+import { Document } from 'src/app/services/data/documents/document';
+import { DocumentsService } from 'src/app/services/data/documents/documents.service';
 
 @Component({
   selector: 'app-add-document',

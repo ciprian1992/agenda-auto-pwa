@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DocumentsPageRoutingModule } from './documents-routing.module';
 
 import { DocumentsPage } from './documents.page';
-import { LuxonDatePipe } from 'src/app/services/luxon-date.pipe';
+import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, DocumentsPageRoutingModule],

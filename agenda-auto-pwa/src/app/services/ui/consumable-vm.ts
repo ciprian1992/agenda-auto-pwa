@@ -1,11 +1,15 @@
 import { DateTime } from 'luxon';
-import { ConsumableType } from 'src/app/services/consumables/consumable-type.enum';
-import { Consumable } from 'src/app/services/consumables/consumable.interface';
+import { ConsumableType } from 'src/app/services/data/consumables/consumable-type.enum';
+import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
+
+const AVERAGE_KM_PER_DAY = 8000 / 365;
 
 export class ConsumableVm {
   id: string;
   beginDate: DateTime;
   expirationDate: DateTime;
+  beginDistance?: number;
+  expirationDistance?: number;
   type: ConsumableType;
   description: string;
   price: number;
@@ -13,7 +17,17 @@ export class ConsumableVm {
   constructor(consumable: Consumable) {
     this.id = consumable.id;
     this.beginDate = consumable.beginDate;
-    this.expirationDate = consumable.expirationDate;
+    this.beginDistance = consumable.beginDistance;
+    this.expirationDistance = consumable.expirationDate;
+
+    if (consumable.expirationDate) {
+      this.expirationDate = consumable.expirationDate;
+    } else {
+      const valability =
+        (this.expirationDate - this.beginDistance) / AVERAGE_KM_PER_DAY;
+
+      this.expirationDate = this.beginDate.plus({ days: valability });
+    }
     this.type = consumable.type;
     this.description = consumable.description;
     this.price = consumable.price;

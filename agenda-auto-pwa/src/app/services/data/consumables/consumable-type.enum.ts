@@ -5,7 +5,7 @@ export interface ConsumableTypeDto {
   distanceUsageLimit?: number;
 }
 
-export interface ConsumableTypeData {
+export interface ConsumableTypeRecommandation {
   id: string;
   name: ConsumableType;
   daysUsageLimit?: number;
@@ -33,7 +33,7 @@ export enum ConsumableType {
   EXTINGUISHER = 'EXTINGUISHER',
 }
 
-export const CONSUMABLE_TYPES: ConsumableTypeData[] = [
+export const CONSUMABLE_TYPE_RECOMMANDATIONS: ConsumableTypeRecommandation[] = [
   {
     id: '2',
     name: ConsumableType.AIR_FILTER,

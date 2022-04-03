@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
-import { Document } from 'src/app/services/documents/document';
-import { CarDocumentType } from 'src/app/services/documents/car-document-type.enum';
+import { Document } from 'src/app/services/data/documents/document';
+import { CarDocumentType } from 'src/app/services/data/documents/car-document-type.enum';
 
 export class DocumentVm {
   id: string;

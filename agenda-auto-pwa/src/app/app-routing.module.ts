@@ -60,6 +60,10 @@ const routes: Routes = [
     path: 'add-document',
     loadChildren: () => import('./modules/add-document/add-document.module').then( m => m.AddDocumentPageModule)
   },
+  {
+    path: 'add-consumable',
+    loadChildren: () => import('./modules/add-consumable/add-consumable.module').then( m => m.AddConsumablePageModule)
+  },
 
 ];
 

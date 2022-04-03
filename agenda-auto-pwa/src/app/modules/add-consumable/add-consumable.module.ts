@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddDocumentPageRoutingModule } from './add-document-routing.module';
+import { AddConsumablePageRoutingModule } from './add-consumable-routing.module';
 
-import { AddDocumentPage } from './add-document.page';
+import { AddConsumablePage } from './add-consumable.page';
 import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    AddDocumentPageRoutingModule,
+    AddConsumablePageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [AddDocumentPage, LuxonDatePipe],
+  declarations: [AddConsumablePage, LuxonDatePipe],
 })
-export class AddDocumentPageModule {}
+export class AddConsumablePageModule {}

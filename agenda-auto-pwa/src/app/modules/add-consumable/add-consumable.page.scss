@@ -1,0 +1,30 @@
+:host {
+  .content {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    height: 100%;
+    width: 50%;
+    min-width: 320px;
+    margin: 0 auto;
+    gap: 16px;
+
+    .add-button {
+      width: 180px;
+      margin: 0 auto;
+    }
+
+    .date-picker-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      .label {
+        width: 65px;
+      }
+    }
+  }
+}

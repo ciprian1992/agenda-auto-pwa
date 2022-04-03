@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ConsumablesPageRoutingModule } from './consumables-routing.module';
 
 import { ConsumablesPage } from './consumables.page';
-import { LuxonDatePipe } from 'src/app/services/luxon-date.pipe';
+import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
 
 @NgModule({
   imports: [
