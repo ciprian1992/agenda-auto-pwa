@@ -8,9 +8,17 @@ import { DocumentsPageRoutingModule } from './documents-routing.module';
 
 import { DocumentsPage } from './documents.page';
 import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
+import { TranslocoModule } from '@ngneat/transloco';
+import { DocumentTypePipe } from 'src/app/services/ui/type-token.pipe';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, DocumentsPageRoutingModule],
-  declarations: [DocumentsPage, LuxonDatePipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    DocumentsPageRoutingModule,
+    TranslocoModule,
+  ],
+  declarations: [DocumentsPage, LuxonDatePipe, DocumentTypePipe],
 })
 export class DocumentsPageModule {}

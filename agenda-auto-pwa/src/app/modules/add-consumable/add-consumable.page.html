@@ -20,7 +20,7 @@
           [value]="consumableType"
           *ngFor="let consumableType of consumableTypes"
         >
-          {{consumableType}}
+          {{consumableType | consumableTypeToken | transloco}}
         </ion-select-option>
       </ion-select>
     </ion-item>

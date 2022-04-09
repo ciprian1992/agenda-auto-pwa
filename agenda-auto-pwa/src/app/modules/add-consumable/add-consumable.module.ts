@@ -8,6 +8,9 @@ import { AddConsumablePageRoutingModule } from './add-consumable-routing.module'
 
 import { AddConsumablePage } from './add-consumable.page';
 import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
+import { ConsumableType } from 'src/app/services/data/consumables/consumable-type.enum';
+import { ConsumableTypePipe } from 'src/app/services/ui/type-token.pipe';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   imports: [
@@ -16,7 +19,8 @@ import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
     IonicModule,
     AddConsumablePageRoutingModule,
     ReactiveFormsModule,
+    TranslocoModule,
   ],
-  declarations: [AddConsumablePage, LuxonDatePipe],
+  declarations: [AddConsumablePage, LuxonDatePipe, ConsumableTypePipe],
 })
 export class AddConsumablePageModule {}

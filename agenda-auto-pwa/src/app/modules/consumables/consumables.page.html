@@ -9,7 +9,7 @@
   <div class="ion-padding header-next-events">
     <ion-text color="tertiary"> Urmatoarele evenimente</ion-text>
     <div class="header-consumable" *ngFor="let consumable of (consumables$ | async) | slice: 0:3">
-      <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{consumable.type }}</div>
+      <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{consumable.type | consumableTypeToken | transloco}}</div>
       <div class="right">{{ consumable.expirationDate| dateFormat : 'd.M.y' }}</div>
     </div>
   </div>
@@ -25,7 +25,7 @@
   <div id="container">
     <div class="container-consumable ion-padding ion-margin" *ngFor="let consumable of (consumables$ | async)">
       <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteConsumable(consumable.id)"></ion-icon>
-      <div class="ion-text-center">{{ consumable.type}}</div>
+      <div class="ion-text-center">{{ consumable.type | consumableTypeToken | transloco}}</div>
       <div class="progress-bar-header">
         <div>{{ consumable.beginDate | dateFormat : 'd.M.y'}}</div>
         <div>{{ consumable.expirationDate | dateFormat : 'd.M.y'}}</div>

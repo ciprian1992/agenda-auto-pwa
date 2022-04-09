@@ -1,0 +1,38 @@
+{
+  "COMMON": {
+    "CONSUMABLE_TYPE": {
+      "ENGINE_OIL_AND_OIL_FILTER": "Ulei de motor si filtru",
+      "AIR_FILTER": "Filtru de aer si polen",
+      "FUEL_FILTER": "Filtru carburant",
+      "BATTERY": "Acumulator",
+      "FREON": "Freon",
+      "BRAKE_PADS_AND_DISCS": "Placute de frane/discuri",
+      "TRANSMISSION_OIL": "Ulei transmisie",
+      "SERVO_LIQUID": "Lichid servo",
+      "CLUTCH_KIT": "Kit Ambreiaj",
+      "DISTRIBUTION_KIT": "Distributia",
+      "SERPETINE_BELT": "Curea distributie",
+      "WATER_PUMP": "Pompa de apa",
+      "SUSPENSIONS": "Suspensii",
+      "GEARBOX_OIL": "Ulei de cutie",
+      "SPARK_PLUGS": "Bujii",
+      "ANTIFREEZE": "Antigel",
+      "MEDICINE_KIT": "Trusa medicala",
+      "EXTINGUISHER": "Stingator"
+    },
+    "DOCUMENT_TYPE": {
+      "VIGNETE": "Vigneta",
+      "CASCO": "Casco",
+      "INSURANCE": "Asigurare",
+      "ITP": "ITP",
+      "RCA": "RCA"
+    }
+  },
+  "LOGIN": {
+    "EMAIL": "Email",
+    "EMAIL_REQUIRED": "Te rugăm să completezi adresa de e-mail.",
+    "EMAIL_INVALID": "Adresă de e-mail invalidă.",
+    "PASSWORD": "Parola",
+    "PASSWORD_REQUIRED": "Te rugăm să completezi parola."
+  }
+}

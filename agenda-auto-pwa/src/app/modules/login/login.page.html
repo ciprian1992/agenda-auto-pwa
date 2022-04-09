@@ -7,25 +7,25 @@
 <ion-content>
   <form [formGroup]="formGroup">
     <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
+      <ion-label position="floating">{{ "LOGIN.EMAIL" | transloco }}</ion-label>
       <ion-input [formControl]="emailControl" type="text" required></ion-input>
     </ion-item>
     <ng-container *ngIf="emailControl.touched">
       <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.required">
-        Te rugăm să completezi adresa de e-mail
+        {{ "LOGIN.EMAIL_REQUIRED" | transloco }}
       </ion-text>
       <ion-text class="ion-padding-start" color="danger" *ngIf="emailControl.errors?.email">
-        Adresă de e-mail invalidă
+        {{ "LOGIN.EMAIL_INVALID" | transloco }}
       </ion-text>
     </ng-container>
 
     <ion-item lines="full">
-      <ion-label position="floating">Parola</ion-label>
+      <ion-label position="floating">{{ "LOGIN.PASSWORD" | transloco }}</ion-label>
       <ion-input [formControl]="passwordControl" type="password" required></ion-input>
     </ion-item>
     <ng-container *ngIf="passwordControl.touched">
       <ion-text class="ion-padding-start" color="danger" *ngIf="passwordControl.errors?.required">
-        Te rugăm să completezi parola
+        {{ "LOGIN.PASSWORD_REQUIRED" | transloco }}
       </ion-text>
     </ng-container>
     <ion-text class="ion-padding-start" color="danger" *ngIf="signInError">{{signInError}}</ion-text>

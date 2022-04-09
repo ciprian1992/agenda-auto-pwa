@@ -21,7 +21,7 @@
       <div class="items-card-subtitle">Consumabile care expira curand</div>
       <div class="items-card-container">
           <div class="item" *ngFor="let consumable of (consumables$ | async)">
-            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{consumable.type }}</div>
+            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon> {{ consumable.type | consumableTypeToken | transloco }}</div>
             <div class="right">{{ consumable.expirationDate| dateFormat : 'd.M.y' }}</div>
           </div>
       </div>
@@ -31,7 +31,7 @@
       <div class="items-card-subtitle">Documente care expira curand</div>
       <div class="items-card-container">
           <div class="item" *ngFor="let document of (documents$ | async)">
-            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{document.type }}</div>
+            <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{ document.type | documentTypeToken | transloco }}</div>
             <div class="right">{{ document.expirationDate| dateFormat : 'd.M.y' }}</div>
           </div>
       </div>

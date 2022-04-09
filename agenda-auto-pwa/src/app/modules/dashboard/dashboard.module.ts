@@ -8,9 +8,25 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { LuxonDatePipe } from '../../services/ui/luxon-date.pipe';
+import { TranslocoModule } from '@ngneat/transloco';
+import {
+  ConsumableTypePipe,
+  DocumentTypePipe,
+} from 'src/app/services/ui/type-token.pipe';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, DashboardPageRoutingModule],
-  declarations: [DashboardPage, LuxonDatePipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    DashboardPageRoutingModule,
+    TranslocoModule,
+  ],
+  declarations: [
+    DashboardPage,
+    LuxonDatePipe,
+    DocumentTypePipe,
+    ConsumableTypePipe,
+  ],
 })
 export class DashboardPageModule {}
