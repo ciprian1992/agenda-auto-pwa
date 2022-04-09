@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
 import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
+import { ConsumablesVmService } from 'src/app/services/ui/consumables-vm.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,11 +18,11 @@ export class DashboardPage implements OnInit {
   documents$: Observable<Document[]>;
 
   constructor(
-    readonly consumablesService: ConsumablesService,
+    readonly consumablesService: ConsumablesVmService,
     readonly documentsService: DocumentsService,
     readonly router: Router
   ) {
-    this.consumables$ = this.consumablesService.consumables$.pipe(
+    this.consumables$ = this.consumablesService.consumablesVm$.pipe(
       map((consumables) => consumables.slice(0, 6))
     );
 

@@ -18,13 +18,13 @@ export class ConsumableVm {
     this.id = consumable.id;
     this.beginDate = consumable.beginDate;
     this.beginDistance = consumable.beginDistance;
-    this.expirationDistance = consumable.expirationDate;
+    this.expirationDistance = consumable.expirationDistance;
 
     if (consumable.expirationDate) {
       this.expirationDate = consumable.expirationDate;
     } else {
       const valability =
-        (this.expirationDate - this.beginDistance) / AVERAGE_KM_PER_DAY;
+        (this.expirationDistance - this.beginDistance) / AVERAGE_KM_PER_DAY;
 
       this.expirationDate = this.beginDate.plus({ days: valability });
     }

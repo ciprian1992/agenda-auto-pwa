@@ -37,7 +37,7 @@ export class ConsumablesService {
       .collection('users')
       .doc(userId)
       .collection<ConsumableDto>(this.collection, (ref) =>
-        ref.orderBy('expirationDistance', 'desc')
+        ref.orderBy('beginTimestamp', 'desc')
       )
       .valueChanges()
       .pipe(
@@ -95,7 +95,7 @@ export class ConsumablesService {
     return {
       id: consumableDto._id,
       beginDate: DateTime.fromMillis(consumableDto.beginTimestamp),
-      expirationDate: consumableDto.beginTimestamp
+      expirationDate: consumableDto.expirationTimestamp
         ? DateTime.fromMillis(consumableDto.expirationTimestamp)
         : null,
       beginDistance: consumableDto.beginDistance,
@@ -107,13 +107,24 @@ export class ConsumablesService {
   }
 
   private mapToConsumableDto(consumable: Consumable): ConsumableDto {
+    if (consumable.expirationDate) {
+      return {
+        _id: consumable.id,
+        _creationTimestamp: DateTime.local().toMillis(),
+        beginTimestamp: consumable.beginDate.toMillis(),
+        expirationTimestamp: consumable.expirationDate?.toMillis(),
+        type: consumable.type,
+        description: consumable.description,
+        price: consumable.price,
+      };
+    }
+
     return {
       _id: consumable.id,
       _creationTimestamp: DateTime.local().toMillis(),
       beginTimestamp: consumable.beginDate.toMillis(),
-      expirationTimestamp: consumable.expirationDate.toMillis(),
-      beginDistance: consumable.beginDistance,
-      expirationDistance: consumable.expirationDistance,
+      beginDistance: consumable?.beginDistance,
+      expirationDistance: consumable?.expirationDistance,
       type: consumable.type,
       description: consumable.description,
       price: consumable.price,

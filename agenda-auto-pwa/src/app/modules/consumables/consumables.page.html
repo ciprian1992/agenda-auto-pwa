@@ -8,7 +8,7 @@
 
   <div class="ion-padding header-next-events">
     <ion-text color="tertiary"> Urmatoarele evenimente</ion-text>
-    <div class="header-document" *ngFor="let consumable of (consumables$ | async) | slice: 0:3">
+    <div class="header-consumable" *ngFor="let consumable of (consumables$ | async) | slice: 0:3">
       <div class="left"><ion-icon class="alarm-icon" name="alarm"></ion-icon>{{consumable.type }}</div>
       <div class="right">{{ consumable.expirationDate| dateFormat : 'd.M.y' }}</div>
     </div>
@@ -23,17 +23,28 @@
   </ion-header>
 
   <div id="container">
-    <div class="container-document ion-padding ion-margin" *ngFor="let consumable of (consumables$ | async)">
+    <div class="container-consumable ion-padding ion-margin" *ngFor="let consumable of (consumables$ | async)">
       <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteConsumable(consumable.id)"></ion-icon>
       <div class="ion-text-center">{{ consumable.type}}</div>
       <div class="progress-bar-header">
-        <div class="date">{{ consumable.beginDate | dateFormat : 'd.M.y'}}</div>
-        <div class="date">{{ consumable.expirationDate | dateFormat : 'd.M.y'}}</div>
+        <div>{{ consumable.beginDate | dateFormat : 'd.M.y'}}</div>
+        <div>{{ consumable.expirationDate | dateFormat : 'd.M.y'}}</div>
       </div>
       <div class="progress-bar ion-margin-bottom">
         <div class="filled" [style.width.%]="consumable.percentagePassed"></div>
         <div class="progress-bar-text ion-text-center">{{ consumable.daysRemaining}} zile ramase</div>
       </div>
+      <ng-container *ngIf="consumable.beginDistance && consumable.expirationDistance">
+        <div class="progress-bar-header">
+          <div>{{ consumable.beginDistance }} km</div>
+          <div class="remaining"> Schimb de ulei in {{ consumable.expirationDistance - consumable.beginDistance }} km</div>
+          <div>{{ consumable.expirationDistance }} km</div>
+        </div>
+        <div class="progress-bar ion-margin-bottom">
+          <!-- <div class="filled" [style.width.%]="consumable.percentagePassed"></div>
+          <div class="progress-bar-text ion-text-center">{{ consumable.daysRemaining}} zile ramase</div> -->
+        </div>
+      </ng-container>
     </div>
   </div>
 

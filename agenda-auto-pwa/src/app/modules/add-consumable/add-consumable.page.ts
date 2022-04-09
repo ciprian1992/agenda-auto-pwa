@@ -33,7 +33,7 @@ export class AddConsumablePage implements OnInit {
   public dateExpirationControl = new FormControl(DateTime.local(), [
     Validators.required,
   ]);
-  public beginDistanceControl = new FormControl(null, [Validators.required]);
+  public beginDistanceControl = new FormControl(null);
   public expirationDistanceControl = new FormControl(null, [
     Validators.required,
   ]);
@@ -140,12 +140,25 @@ export class AddConsumablePage implements OnInit {
   }
 
   private extractConsumableFromForm(): Consumable {
+    if (
+      this.formGroup.controls['beginDistance'] &&
+      this.formGroup.controls['expirationDistance']
+    ) {
+      return {
+        id: '',
+        beginDate: DateTime.fromISO(this.dateBeginControl.value),
+        beginDistance: this.beginDistanceControl.value,
+        expirationDistance: this.expirationDistanceControl.value,
+        type: this.consumableTypeControl.value,
+        description: this.descriptionControl.value,
+        price: this.priceControl.value,
+      };
+    }
+
     return {
       id: '',
       beginDate: DateTime.fromISO(this.dateBeginControl.value),
       expirationDate: DateTime.fromISO(this.dateExpirationControl.value),
-      beginDistance: this.beginDistanceControl.value,
-      expirationDistance: this.expirationDistanceControl.value,
       type: this.consumableTypeControl.value,
       description: this.descriptionControl.value,
       price: this.priceControl.value,
