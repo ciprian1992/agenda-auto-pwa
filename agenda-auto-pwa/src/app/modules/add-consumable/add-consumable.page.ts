@@ -144,6 +144,8 @@ export class AddConsumablePage implements OnInit {
       id: '',
       beginDate: DateTime.fromISO(this.dateBeginControl.value),
       expirationDate: DateTime.fromISO(this.dateExpirationControl.value),
+      beginDistance: this.beginDistanceControl.value,
+      expirationDistance: this.expirationDistanceControl.value,
       type: this.consumableTypeControl.value,
       description: this.descriptionControl.value,
       price: this.priceControl.value,
