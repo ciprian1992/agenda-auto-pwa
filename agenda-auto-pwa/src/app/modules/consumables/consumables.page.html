@@ -16,12 +16,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Consumabile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
     <div class="container-consumable ion-padding ion-margin" *ngFor="let consumable of (consumables$ | async)">
       <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteConsumable(consumable.id)"></ion-icon>

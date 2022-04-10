@@ -16,12 +16,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Documents</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
     <div class="container-document ion-padding ion-margin" *ngFor="let document of (documents$ | async)">
       <ion-icon class="delete-icon" name="trash" color="danger" (click)="deleteDocument(document.id)"></ion-icon>
