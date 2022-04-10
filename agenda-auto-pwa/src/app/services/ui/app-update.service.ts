@@ -13,11 +13,12 @@ export class AppUpdateService {
       this.showAppUpdateAlert();
     });
   }
-  showAppUpdateAlert() {
+
+  public async showAppUpdateAlert(): Promise<void> {
     const header = 'Versiune noua disponibila';
     const message = 'Apasati Ok pentru refresh.';
 
-    this.alertController.create({
+    const alert = await this.alertController.create({
       header,
       message,
       buttons: [
@@ -36,6 +37,8 @@ export class AppUpdateService {
         },
       ],
     });
+
+    await alert.present();
   }
   doAppUpdate() {
     this.updates.activateUpdate().then(() => document.location.reload());
