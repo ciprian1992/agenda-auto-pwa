@@ -32,3 +32,13 @@ a {
 .header-background {
   display: none;
 }
+
+ion-modal {
+  ion-content {
+    --padding-top: 25vh;
+
+    ion-datetime {
+      margin: 0 auto;
+    }
+  }
+}
