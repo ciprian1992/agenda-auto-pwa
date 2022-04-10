@@ -16,16 +16,13 @@ export class AppUpdateService {
   showAppUpdateAlert() {
     const header = 'Versiune noua disponibila';
     const message = 'Apasati Ok pentru refresh.';
-    const action = this.doAppUpdate;
-    const caller = this;
-    // Use MatDialog or ionicframework's AlertController or similar
 
     this.alertController.create({
       header,
       message,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'ANULEAZA',
           role: 'cancel',
           cssClass: 'secondary',
           id: 'cancel-button',

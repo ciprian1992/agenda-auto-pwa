@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AppUpdateService } from './services/ui/app-update.service';
 
 @NgModule({
   declarations: [AppComponent],
