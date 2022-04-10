@@ -7,9 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { AddDocumentPageRoutingModule } from './add-document-routing.module';
 
 import { AddDocumentPage } from './add-document.page';
-import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
 import { TranslocoModule } from '@ngneat/transloco';
 import { DocumentTypePipe } from 'src/app/services/ui/type-token.pipe';
+import { SharedModule } from 'src/app/services/ui/shared.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,8 @@ import { DocumentTypePipe } from 'src/app/services/ui/type-token.pipe';
     AddDocumentPageRoutingModule,
     ReactiveFormsModule,
     TranslocoModule,
+    SharedModule,
   ],
-  declarations: [AddDocumentPage, LuxonDatePipe, DocumentTypePipe],
+  declarations: [AddDocumentPage],
 })
 export class AddDocumentPageModule {}

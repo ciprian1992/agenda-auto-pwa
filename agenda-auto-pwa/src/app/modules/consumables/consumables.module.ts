@@ -10,6 +10,7 @@ import { ConsumablesPage } from './consumables.page';
 import { LuxonDatePipe } from 'src/app/services/ui/luxon-date.pipe';
 import { ConsumableTypePipe } from 'src/app/services/ui/type-token.pipe';
 import { TranslocoModule } from '@ngneat/transloco';
+import { SharedModule } from 'src/app/services/ui/shared.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     IonicModule,
     ConsumablesPageRoutingModule,
     TranslocoModule,
+    SharedModule,
   ],
-  declarations: [ConsumablesPage, LuxonDatePipe, ConsumableTypePipe],
+  declarations: [ConsumablesPage],
 })
 export class ConsumablesPageModule {}

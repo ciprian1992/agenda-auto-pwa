@@ -7,12 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
-import { LuxonDatePipe } from '../../services/ui/luxon-date.pipe';
 import { TranslocoModule } from '@ngneat/transloco';
-import {
-  ConsumableTypePipe,
-  DocumentTypePipe,
-} from 'src/app/services/ui/type-token.pipe';
+import { SharedModule } from 'src/app/services/ui/shared.module';
 
 @NgModule({
   imports: [
@@ -21,12 +17,8 @@ import {
     IonicModule,
     DashboardPageRoutingModule,
     TranslocoModule,
+    SharedModule,
   ],
-  declarations: [
-    DashboardPage,
-    LuxonDatePipe,
-    DocumentTypePipe,
-    ConsumableTypePipe,
-  ],
+  declarations: [DashboardPage],
 })
 export class DashboardPageModule {}
