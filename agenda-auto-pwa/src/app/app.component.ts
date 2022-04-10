@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { setupTestingRouter } from '@angular/router/testing';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppUpdateService } from './services/ui/app-update.service';
