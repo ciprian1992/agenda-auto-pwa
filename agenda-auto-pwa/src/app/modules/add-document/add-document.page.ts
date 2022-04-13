@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   FormControl,
@@ -19,7 +19,7 @@ import { DocumentsService } from 'src/app/services/data/documents/documents.serv
   templateUrl: './add-document.page.html',
   styleUrls: ['./add-document.page.scss'],
 })
-export class AddDocumentPage implements OnInit {
+export class AddDocumentPage implements OnInit, OnDestroy {
   public descriptionControl = new FormControl('');
   public documentTypeControl = new FormControl('', [Validators.required]);
   public priceControl = new FormControl('');
@@ -83,15 +83,19 @@ export class AddDocumentPage implements OnInit {
     ]);
   }
 
+  public addDocument(): void {
+    this.addDocumentSubject.next();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   private checkDates(): ValidationErrors | null {
     const beginDate = DateTime.fromISO(this.dateBeginControl.value);
     const expirationDate = DateTime.fromISO(this.dateExpirationControl.value);
 
     return beginDate <= expirationDate ? null : { datesWrong: true };
-  }
-
-  public addDocument(): void {
-    this.addDocumentSubject.next();
   }
 
   private extractDocumentFromForm(): Document {
@@ -103,9 +107,5 @@ export class AddDocumentPage implements OnInit {
       description: this.descriptionControl.value,
       price: this.priceControl.value,
     };
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 }

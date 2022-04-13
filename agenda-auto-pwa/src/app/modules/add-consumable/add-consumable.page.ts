@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   FormControl,
@@ -23,7 +23,7 @@ import { ConsumablesService } from 'src/app/services/data/consumables/consumable
   templateUrl: './add-consumable.page.html',
   styleUrls: ['./add-consumable.page.scss'],
 })
-export class AddConsumablePage implements OnInit {
+export class AddConsumablePage implements OnInit, OnDestroy {
   public descriptionControl = new FormControl('');
   public consumableTypeControl = new FormControl('', [Validators.required]);
   public priceControl = new FormControl('');
@@ -33,10 +33,8 @@ export class AddConsumablePage implements OnInit {
   public dateExpirationControl = new FormControl(DateTime.local(), [
     Validators.required,
   ]);
-  public beginDistanceControl = new FormControl(null);
-  public expirationDistanceControl = new FormControl(null, [
-    Validators.required,
-  ]);
+  public beginDistanceControl = new FormControl(0, [Validators.required]);
+  public expirationDistanceControl = new FormControl(0, [Validators.required]);
   public consumableTypes = Object.keys(ConsumableType);
 
   public formGroup = new FormGroup({
@@ -79,6 +77,14 @@ export class AddConsumablePage implements OnInit {
     );
   }
 
+  public addConsumable(): void {
+    this.addConsumableSubject.next();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   public ngOnInit() {
     this.subscriptions.add(
       this.beginDistanceControl.valueChanges.subscribe((beginDistance) => {
@@ -112,6 +118,10 @@ export class AddConsumablePage implements OnInit {
             'expirationDistance',
             this.expirationDistanceControl
           );
+          this.expirationDistanceControl.setValue(
+            this.beginDistanceControl.value +
+              this.recommandation.distanceUsageLimit ?? 0
+          );
           this.formGroup.removeControl('dateExpiration');
         }
       })
@@ -135,14 +145,10 @@ export class AddConsumablePage implements OnInit {
     return beginDate <= expirationDate ? null : { datesWrong: true };
   }
 
-  public addConsumable(): void {
-    this.addConsumableSubject.next();
-  }
-
   private extractConsumableFromForm(): Consumable {
     if (
-      this.formGroup.controls['beginDistance'] &&
-      this.formGroup.controls['expirationDistance']
+      this.formGroup.controls.beginDistance &&
+      this.formGroup.controls.expirationDistance
     ) {
       return {
         id: '',
@@ -163,9 +169,5 @@ export class AddConsumablePage implements OnInit {
       description: this.descriptionControl.value,
       price: this.priceControl.value,
     };
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 }
