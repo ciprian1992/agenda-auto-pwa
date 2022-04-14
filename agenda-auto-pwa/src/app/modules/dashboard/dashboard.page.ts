@@ -4,9 +4,9 @@ import { DocumentsService } from 'src/app/services/data/documents/documents.serv
 import { Document } from 'src/app/services/data/documents/document';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
 import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
 import { ConsumablesVmService } from 'src/app/services/ui/consumables-vm.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,6 +45,37 @@ export class DashboardPage implements OnInit {
 
   public navigateToAddDocument() {
     this.router.navigate(['add-document']);
+  }
+
+  public getIcs(): void {
+    const url = encodeURI(
+      'data:text/calendar;charset=utf8,' +
+        [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'BEGIN:VEVENT',
+          'URL:' + document.URL,
+          'DTSTART:' + DateTime.now().toMillis(),
+          'DTEND:' + DateTime.now().toMillis(),
+          'SUMMARY:' + 'Summary',
+          'DESCRIPTION:' + '',
+          'LOCATION:' + '',
+          'END:VEVENT',
+          'END:VCALENDAR',
+        ].join('\n')
+    );
+    let isIE = false;
+    if (navigator.userAgent.indexOf('MSIE') !== -1) {
+      //IF IE > 10
+      isIE = true;
+    }
+    if (isIE) {
+      const nav = window.navigator as any;
+      const blob = new Blob([url], { type: 'text/calendar' });
+      nav.msSaveOrOpenBlob(blob, 'download.ics');
+    } else {
+      window.open(url, '_blank');
+    }
   }
 
   ngOnInit() {}
