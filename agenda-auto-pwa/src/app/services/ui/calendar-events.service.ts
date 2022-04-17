@@ -9,21 +9,30 @@ interface CalendarEvent {
 
 import { Injectable } from '@angular/core';
 import { DocumentTypePipe } from './type-token.pipe';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarEventsService {
-  constructor(private readonly documentTypePipe: DocumentTypePipe) {}
+  constructor(
+    private readonly documentTypePipe: DocumentTypePipe,
+    private readonly translocoPipe: TranslocoPipe
+  ) {}
 
   public downloadIcs(item: Document): void {
+    const dateEnd = item.expirationDate.plus({ days: 1 });
+    const translatedType = this.translocoPipe.transform(
+      this.documentTypePipe.transform(item.type)
+    );
+
     const icsEvent = {
       start: [
         item.expirationDate.year,
         item.expirationDate.month,
         item.expirationDate.day,
-        0,
       ],
+      end: [dateEnd.year, dateEnd.month, dateEnd.day],
       duration: { hours: 24 },
-      title: `${this.documentTypePipe.transform(item.type)} expira`,
+      title: `${translatedType} expira`,
       url: 'https://thankful-plant-074674403.1.azurestaticapps.net/login',
       status: 'CONFIRMED',
     };
