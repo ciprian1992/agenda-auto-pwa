@@ -7,9 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { EMPTY, Subject, Subscription } from 'rxjs';
-import { mergeMap, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, from, Observable, Subject, Subscription } from 'rxjs';
+import { mapTo, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import {
   ConsumableType,
   ConsumableTypeRecommandation,
@@ -17,6 +18,8 @@ import {
 } from 'src/app/services/data/consumables/consumable-type.enum';
 import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
 import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
+import { CalendarEventsService } from 'src/app/services/ui/calendar-events.service';
+import { ConsumableVm } from 'src/app/services/ui/consumable-vm';
 
 @Component({
   selector: 'app-add-consumable',
@@ -49,6 +52,8 @@ export class AddConsumablePage implements OnInit, OnDestroy {
   private recommandation: ConsumableTypeRecommandation;
 
   constructor(
+    public readonly alertController: AlertController,
+    public readonly calendarEventsService: CalendarEventsService,
     private readonly consumablesService: ConsumablesService,
     public readonly auth: AngularFireAuth,
     private readonly router: Router
@@ -61,19 +66,51 @@ export class AddConsumablePage implements OnInit, OnDestroy {
             this.formGroup.markAllAsTouched();
             this.formGroup.updateValueAndValidity();
             if (this.formGroup.valid) {
-              return this.consumablesService.addConsumable(
-                uid,
-                this.extractConsumableFromForm()
-              );
+              const consumable: Consumable = this.extractConsumableFromForm();
+
+              return this.consumablesService
+                .addConsumable(uid, consumable)
+                .pipe(mapTo(new ConsumableVm(consumable)));
             }
 
             return EMPTY;
-          })
+          }),
+          mergeMap((consumable) => this.showAddEventDialog(consumable))
         )
         .subscribe(() => {
           this.consumablesService.fetchConsumables();
           this.router.navigate(['dashboard']);
         })
+    );
+  }
+
+  public showAddEventDialog(consumable: Consumable): Observable<any> {
+    const alertPromise = from(
+      this.alertController.create({
+        header: 'Creeaza eveniment in calendar',
+        message:
+          'Doriti sa creati un eveniment in calendar pentru a va aduce aminte atunci cand trebuie sa faceti schimbul?',
+        buttons: [
+          {
+            text: 'Nu',
+            role: 'cancel',
+            cssClass: 'secondary',
+            id: 'cancel-button',
+          },
+          {
+            text: 'Da',
+            id: 'confirm-button',
+            handler: () => {
+              this.calendarEventsService.downloadIcs(consumable);
+            },
+          },
+        ],
+      })
+    );
+
+    return from(alertPromise).pipe(
+      tap((alert) => alert.present()),
+      mergeMap((alert) => alert.onDidDismiss())
     );
   }
 

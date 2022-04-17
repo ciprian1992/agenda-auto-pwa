@@ -8,21 +8,38 @@ interface CalendarEvent {
 }
 
 import { Injectable } from '@angular/core';
-import { DocumentTypePipe } from './type-token.pipe';
+import { ConsumableTypePipe, DocumentTypePipe } from './type-token.pipe';
 import { TranslocoPipe } from '@ngneat/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarEventsService {
   constructor(
+    private readonly consumableType: ConsumableTypePipe,
     private readonly documentTypePipe: DocumentTypePipe,
     private readonly translocoPipe: TranslocoPipe
   ) {}
 
-  public downloadIcs(item: Document): void {
+  public downloadIcs(item: Document | Consumable): void {
     const dateEnd = item.expirationDate.plus({ days: 1 });
-    const translatedType = this.translocoPipe.transform(
-      this.documentTypePipe.transform(item.type)
-    );
+    let title = '';
+    let description = '';
+
+    if (item instanceof Document) {
+      const translatedType = this.translocoPipe.transform(
+        this.documentTypePipe.transform(item.type)
+      );
+      title = `${translatedType} - reinnoire`;
+    } else {
+      const translatedType = this.translocoPipe.transform(
+        this.consumableType.transform(item.type)
+      );
+      title = `${translatedType} - schimb`;
+      const consumable = item as Consumable;
+      if (consumable.expirationDistance) {
+        description = `Kilometraj schimb anterior: ${consumable.beginDistance} \n
+          Kilometraj recomandare schimb: ${consumable.expirationDistance}`;
+      }
+    }
 
     const icsEvent = {
       start: [
@@ -31,7 +48,8 @@ export class CalendarEventsService {
         item.expirationDate.day,
       ],
       end: [dateEnd.year, dateEnd.month, dateEnd.day],
-      title: `${translatedType} expira`,
+      title,
+      description,
       url: 'https://thankful-plant-074674403.1.azurestaticapps.net/login',
       status: 'CONFIRMED',
     };

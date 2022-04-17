@@ -8,7 +8,6 @@ import { AddDocumentPageRoutingModule } from './add-document-routing.module';
 
 import { AddDocumentPage } from './add-document.page';
 import { TranslocoModule } from '@ngneat/transloco';
-import { DocumentTypePipe } from 'src/app/services/ui/type-token.pipe';
 import { SharedModule } from 'src/app/services/ui/shared.module';
 
 @NgModule({
@@ -22,6 +21,5 @@ import { SharedModule } from 'src/app/services/ui/shared.module';
     SharedModule,
   ],
   declarations: [AddDocumentPage],
-  providers: [DocumentTypePipe],
 })
 export class AddDocumentPageModule {}

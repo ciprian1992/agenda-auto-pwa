@@ -83,7 +83,7 @@ export class AddDocumentPage implements OnInit, OnDestroy {
   public showAddEventDialog(document: Document): Observable<any> {
     const alertPromise = from(
       this.alertController.create({
-        header: 'Creeaza eveniment',
+        header: 'Creeaza eveniment in calendar',
         message:
           'Doriti sa creati un eveniment in calendar pentru a va aduce aminte atunci cand expira?',
         buttons: [
