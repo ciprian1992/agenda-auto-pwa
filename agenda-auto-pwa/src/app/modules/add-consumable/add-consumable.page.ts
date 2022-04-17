@@ -113,7 +113,7 @@ export class AddConsumablePage implements OnInit, OnDestroy {
               if (consumable.expirationDistance) {
                 description =
                   `Kilometraj schimb anterior: ${consumable.beginDistance} \n` +
-                  `git aKilometraj recomandare schimb: ${consumable.expirationDistance}`;
+                  `Kilometraj recomandare schimb: ${consumable.expirationDistance}`;
               }
 
               this.calendarEventsService.downloadCalendarEventFile(
