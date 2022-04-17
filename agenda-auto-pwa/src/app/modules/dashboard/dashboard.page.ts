@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Consumable } from 'src/app/services/data/consumables/consumable.interface';
 import { ConsumablesVmService } from 'src/app/services/ui/consumables-vm.service';
 import { DateTime } from 'luxon';
+const ics = require('ics');
 
 @Component({
   selector: 'app-dashboard',
@@ -48,34 +49,47 @@ export class DashboardPage implements OnInit {
   }
 
   public getIcs(): void {
-    const url = encodeURI(
-      'data:text/calendar;charset=utf8,' +
-        [
-          'BEGIN:VCALENDAR',
-          'VERSION:2.0',
-          'BEGIN:VEVENT',
-          'URL:' + document.URL,
-          'DTSTART:' + DateTime.now().toMillis(),
-          'DTEND:' + DateTime.now().toMillis(),
-          'SUMMARY:' + 'Summary',
-          'DESCRIPTION:' + '',
-          'LOCATION:' + '',
-          'END:VEVENT',
-          'END:VCALENDAR',
-        ].join('\n')
-    );
-    let isIE = false;
-    if (navigator.userAgent.indexOf('MSIE') !== -1) {
-      //IF IE > 10
-      isIE = true;
-    }
-    if (isIE) {
-      const nav = window.navigator as any;
-      const blob = new Blob([url], { type: 'text/calendar' });
-      nav.msSaveOrOpenBlob(blob, 'download.ics');
-    } else {
-      window.open(url, '_blank');
-    }
+    const event = {
+      start: [2018, 5, 30, 6, 30],
+      duration: { hours: 6, minutes: 30 },
+      title: 'Bolder Boulder',
+      description: 'Annual 10-kilometer run in Boulder, Colorado',
+      location: 'Folsom Field, University of Colorado (finish line)',
+      url: 'http://www.bolderboulder.com/',
+      geo: { lat: 40.0095, lon: 105.2669 },
+      categories: ['10k races', 'Memorial Day Weekend', 'Boulder CO'],
+      status: 'CONFIRMED',
+      busyStatus: 'BUSY',
+      organizer: { name: 'Admin', email: 'Race@BolderBOULDER.com' },
+      attendees: [
+        {
+          name: 'Adam Gibbons',
+          email: 'adam@example.com',
+          rsvp: true,
+          partstat: 'ACCEPTED',
+          role: 'REQ-PARTICIPANT',
+        },
+        {
+          name: 'Brittany Seaton',
+          email: 'brittany@example2.org',
+          dir: 'https://linkedin.com/in/brittanyseaton',
+          role: 'OPT-PARTICIPANT',
+        },
+      ],
+    };
+
+    ics.createEvent(event, (error, value) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      console.log(value);
+
+      const blob = new Blob([value], { type: 'text/calendar;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
   }
 
   ngOnInit() {}
