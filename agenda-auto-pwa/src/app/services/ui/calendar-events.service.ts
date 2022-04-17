@@ -36,8 +36,9 @@ export class CalendarEventsService {
       title = `${translatedType} - schimb`;
       const consumable = item as Consumable;
       if (consumable.expirationDistance) {
-        description = `Kilometraj schimb anterior: ${consumable.beginDistance} \n
-          Kilometraj recomandare schimb: ${consumable.expirationDistance}`;
+        description =
+          `Kilometraj schimb anterior: ${consumable.beginDistance} \n` +
+          `Kilometraj recomandare schimb: ${consumable.expirationDistance}`;
       }
     }
 
