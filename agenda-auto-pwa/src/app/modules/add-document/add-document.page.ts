@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { DateTime } from 'luxon';
 import { EMPTY, from, Observable, Subject, Subscription } from 'rxjs';
 import { mapTo, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
@@ -51,7 +52,8 @@ export class AddDocumentPage implements OnInit, OnDestroy {
     private readonly router: Router,
     public readonly alertController: AlertController,
     public readonly documentTypePipe: DocumentTypePipe,
-    public readonly calendarEventsService: CalendarEventsService
+    public readonly calendarEventsService: CalendarEventsService,
+    public readonly translocoPipe: TranslocoPipe
   ) {
     this.subscriptions.add(
       this.addDocumentSubject
@@ -97,7 +99,16 @@ export class AddDocumentPage implements OnInit, OnDestroy {
             text: 'Da',
             id: 'confirm-button',
             handler: () => {
-              this.calendarEventsService.downloadIcs(document);
+              const translatedType = this.translocoPipe.transform(
+                this.documentTypePipe.transform(document.type)
+              );
+              const title = `${translatedType} - reinnoire`;
+
+              this.calendarEventsService.downloadCalendarEventFile(
+                title,
+                '',
+                document.expirationDate
+              );
             },
           },
         ],

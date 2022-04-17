@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { DateTime } from 'luxon';
 import { EMPTY, from, Observable, Subject, Subscription } from 'rxjs';
 import { mapTo, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
@@ -20,6 +21,7 @@ import { Consumable } from 'src/app/services/data/consumables/consumable.interfa
 import { ConsumablesService } from 'src/app/services/data/consumables/consumables.service';
 import { CalendarEventsService } from 'src/app/services/ui/calendar-events.service';
 import { ConsumableVm } from 'src/app/services/ui/consumable-vm';
+import { ConsumableTypePipe } from 'src/app/services/ui/type-token.pipe';
 
 @Component({
   selector: 'app-add-consumable',
@@ -56,7 +58,9 @@ export class AddConsumablePage implements OnInit, OnDestroy {
     public readonly calendarEventsService: CalendarEventsService,
     private readonly consumablesService: ConsumablesService,
     public readonly auth: AngularFireAuth,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly consumableTypePipe: ConsumableTypePipe,
+    private readonly translocoPipe: TranslocoPipe
   ) {
     this.subscriptions.add(
       this.addConsumableSubject
@@ -101,7 +105,22 @@ export class AddConsumablePage implements OnInit, OnDestroy {
             text: 'Da',
             id: 'confirm-button',
             handler: () => {
-              this.calendarEventsService.downloadIcs(consumable);
+              const translatedType = this.translocoPipe.transform(
+                this.consumableTypePipe.transform(consumable.type)
+              );
+              const title = `${translatedType} - schimb`;
+              let description = '';
+              if (consumable.expirationDistance) {
+                description =
+                  `Kilometraj schimb anterior: ${consumable.beginDistance} \n` +
+                  `git aKilometraj recomandare schimb: ${consumable.expirationDistance}`;
+              }
+
+              this.calendarEventsService.downloadCalendarEventFile(
+                title,
+                description,
+                consumable.expirationDate
+              );
             },
           },
         ],

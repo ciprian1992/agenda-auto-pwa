@@ -13,42 +13,22 @@ import { TranslocoPipe } from '@ngneat/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarEventsService {
-  constructor(
-    private readonly consumableType: ConsumableTypePipe,
-    private readonly documentTypePipe: DocumentTypePipe,
-    private readonly translocoPipe: TranslocoPipe
-  ) {}
+  constructor() {}
 
-  public downloadIcs(item: Document | Consumable): void {
-    const dateEnd = item.expirationDate.plus({ days: 1 });
-    let title = '';
-    let description = '';
-
-    if (item instanceof Document) {
-      const translatedType = this.translocoPipe.transform(
-        this.documentTypePipe.transform(item.type)
-      );
-      title = `${translatedType} - reinnoire`;
-    } else {
-      const translatedType = this.translocoPipe.transform(
-        this.consumableType.transform(item.type)
-      );
-      title = `${translatedType} - schimb`;
-      const consumable = item as Consumable;
-      if (consumable.expirationDistance) {
-        description =
-          `Kilometraj schimb anterior: ${consumable.beginDistance} \n` +
-          `Kilometraj recomandare schimb: ${consumable.expirationDistance}`;
-      }
-    }
+  public downloadCalendarEventFile(
+    title: string,
+    description: string,
+    expirationDate: DateTime
+  ): void {
+    const expirationNextDay = expirationDate.plus({ days: 1 });
 
     const icsEvent = {
-      start: [
-        item.expirationDate.year,
-        item.expirationDate.month,
-        item.expirationDate.day,
+      start: [expirationDate.year, expirationDate.month, expirationDate.day],
+      end: [
+        expirationNextDay.year,
+        expirationNextDay.month,
+        expirationNextDay.day,
       ],
-      end: [dateEnd.year, dateEnd.month, dateEnd.day],
       title,
       description,
       url: 'https://thankful-plant-074674403.1.azurestaticapps.net/login',
