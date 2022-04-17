@@ -88,7 +88,7 @@ export class DashboardPage implements OnInit {
 
       const blob = new Blob([value], { type: 'text/calendar;charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
-      window.open(url);
+      window.open(url, '_self');
     });
   }
 
