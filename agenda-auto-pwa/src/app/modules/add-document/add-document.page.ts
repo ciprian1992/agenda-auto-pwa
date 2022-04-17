@@ -7,12 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { DateTime } from 'luxon';
-import { EMPTY, Subject, Subscription } from 'rxjs';
-import { mergeMap, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, from, Observable, Subject, Subscription } from 'rxjs';
+import { mapTo, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { CarDocumentType } from 'src/app/services/data/documents/car-document-type.enum';
 import { Document } from 'src/app/services/data/documents/document';
 import { DocumentsService } from 'src/app/services/data/documents/documents.service';
+import { CalendarEventsService } from 'src/app/services/ui/calendar-events.service';
+import { DocumentTypePipe } from 'src/app/services/ui/type-token.pipe';
 
 @Component({
   selector: 'app-add-document',
@@ -45,7 +48,10 @@ export class AddDocumentPage implements OnInit, OnDestroy {
   constructor(
     private readonly documentsService: DocumentsService,
     public readonly auth: AngularFireAuth,
-    private readonly router: Router
+    private readonly router: Router,
+    public readonly alertController: AlertController,
+    public readonly documentTypePipe: DocumentTypePipe,
+    public readonly calendarEventsService: CalendarEventsService
   ) {
     this.subscriptions.add(
       this.addDocumentSubject
@@ -55,19 +61,52 @@ export class AddDocumentPage implements OnInit, OnDestroy {
             this.formGroup.markAllAsTouched();
             this.formGroup.updateValueAndValidity();
             if (this.formGroup.valid) {
-              return this.documentsService.addDocument(
-                uid,
-                this.extractDocumentFromForm()
-              );
+              const document: Document = this.extractDocumentFromForm();
+
+              return this.documentsService
+                .addDocument(uid, this.extractDocumentFromForm())
+                .pipe(mapTo(document));
             }
 
             return EMPTY;
-          })
+          }),
+          mergeMap((document) => this.showAddEventDialog(document))
         )
         .subscribe(() => {
           this.documentsService.fetchDocuments();
+
           this.router.navigate(['dashboard']);
         })
+    );
+  }
+
+  public showAddEventDialog(document: Document): Observable<any> {
+    const alertPromise = from(
+      this.alertController.create({
+        header: 'Creeaza eveniment',
+        message:
+          'Doriti sa creati un eveniment in calendar pentru a va aduce aminte atunci cand expira?',
+        buttons: [
+          {
+            text: 'Nu',
+            role: 'cancel',
+            cssClass: 'secondary',
+            id: 'cancel-button',
+          },
+          {
+            text: 'Da',
+            id: 'confirm-button',
+            handler: () => {
+              this.calendarEventsService.downloadIcs(document);
+            },
+          },
+        ],
+      })
+    );
+
+    return from(alertPromise).pipe(
+      tap((alert) => alert.present()),
+      mergeMap((alert) => alert.onDidDismiss())
     );
   }
 

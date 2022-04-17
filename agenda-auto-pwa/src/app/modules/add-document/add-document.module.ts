@@ -22,5 +22,6 @@ import { SharedModule } from 'src/app/services/ui/shared.module';
     SharedModule,
   ],
   declarations: [AddDocumentPage],
+  providers: [DocumentTypePipe],
 })
 export class AddDocumentPageModule {}
