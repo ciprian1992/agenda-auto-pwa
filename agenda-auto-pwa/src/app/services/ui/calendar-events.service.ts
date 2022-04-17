@@ -31,7 +31,6 @@ export class CalendarEventsService {
         item.expirationDate.day,
       ],
       end: [dateEnd.year, dateEnd.month, dateEnd.day],
-      duration: { hours: 24 },
       title: `${translatedType} expira`,
       url: 'https://thankful-plant-074674403.1.azurestaticapps.net/login',
       status: 'CONFIRMED',
