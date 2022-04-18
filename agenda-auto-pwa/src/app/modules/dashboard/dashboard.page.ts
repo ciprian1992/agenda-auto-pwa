@@ -66,12 +66,12 @@ export class DashboardPage implements OnInit {
 
     // Checks if should display install popup notification:
     if (isIos() && isSafari() && !isInStandaloneMode()) {
-      this.showInstallTooltip$ = timer(10000).pipe(
+      this.showInstallTooltip$ = timer(5000).pipe(
         mapTo(false),
         startWith(true)
       );
     } else if (isIos() && !isInStandaloneMode()) {
-      this.showUseSafariTooltip$ = timer(10000).pipe(
+      this.showUseSafariTooltip$ = timer(5000).pipe(
         mapTo(false),
         startWith(true)
       );
