@@ -57,7 +57,7 @@ export class DashboardPage implements OnInit {
     const isSafari = () => {
       const userAgent = window.navigator.userAgent.toLowerCase();
 
-      return /safari/.test(userAgent);
+      return /safari/.test(userAgent) && !/crios/.test(userAgent);
     };
 
     // Detects if device is in standalone mode
