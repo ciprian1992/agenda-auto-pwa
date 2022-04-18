@@ -28,6 +28,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 })
 export class DashboardPage implements OnInit {
   public showInstallTooltip$: Observable<boolean>;
+  public showUseSafariTooltip$: Observable<boolean>;
   consumables$: Observable<Consumable[]>;
   documents$: Observable<Document[]>;
 
@@ -66,6 +67,11 @@ export class DashboardPage implements OnInit {
     // Checks if should display install popup notification:
     if (isIos() && isSafari() && !isInStandaloneMode()) {
       this.showInstallTooltip$ = timer(10000).pipe(
+        mapTo(false),
+        startWith(true)
+      );
+    } else if (isIos() && !isInStandaloneMode()) {
+      this.showUseSafariTooltip$ = timer(10000).pipe(
         mapTo(false),
         startWith(true)
       );

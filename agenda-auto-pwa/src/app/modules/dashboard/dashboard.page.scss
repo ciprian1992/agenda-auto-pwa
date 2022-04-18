@@ -2,7 +2,7 @@ ion-menu-button {
   color: var(--ion-color-primary);
 }
 
-.install-tooltip {
+.tooltip {
   background: white;
   position: absolute;
   bottom: 24px;
@@ -22,18 +22,20 @@ ion-menu-button {
     vertical-align: bottom;
   }
 
-  &::before{
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    position: absolute;
-    border-left: 18px solid transparent;
-    border-right: 18px solid transparent;
-    border-top: 18px solid white;
-    left: calc(50% - 9px);
-    top: 99%;
-    margin: 0 auto;
+  &.install {
+    &::before{
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 18px solid white;
+      left: calc(50% - 9px);
+      top: 99%;
+      margin: 0 auto;
+    }
   }
 }
 

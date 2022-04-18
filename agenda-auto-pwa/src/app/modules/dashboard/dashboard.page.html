@@ -50,7 +50,15 @@
   </ion-fab>
 </ion-content>
 
-<div class="install-tooltip" @fadeInOut *ngIf="showInstallTooltip$ | async">
-    Instaleaza aplicatia pe Iphone apasand <ion-icon class="share-icon" name="share-outline"></ion-icon> si apoi "Add to homescreen"
-</div>
+<ng-container *ngIf="{ install: showInstallTooltip$, useSafari: showUseSafariTooltip$ | async } as showTooltip">
+  <div class="tooltip" [class.install] = "showTooltip.install" @fadeInOut  *ngIf="showTooltip.install || showTooltip.useSafari">
+    <ng-container *ngIf="showTooltip.install">
+      Instaleaza aplicatia pe Iphone apasand <ion-icon class="share-icon" name="share-outline"></ion-icon> si apoi "Add to homescreen"
+    </ng-container>
+    <ng-container *ngIf="showTooltip.useSafari">
+      Pentru a putea instala aplicatia va rugam sa utilizati browserul Safari
+    </ng-container>
+  </div>
+</ng-container>
+
 
