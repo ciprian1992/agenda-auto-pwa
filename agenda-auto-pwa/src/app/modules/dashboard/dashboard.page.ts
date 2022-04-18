@@ -27,7 +27,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   ],
 })
 export class DashboardPage implements OnInit {
-  public showIcon$: Observable<boolean>;
+  public showInstallTooltip$: Observable<boolean>;
   consumables$: Observable<Consumable[]>;
   documents$: Observable<Document[]>;
 
@@ -52,13 +52,23 @@ export class DashboardPage implements OnInit {
 
       return /iphone|ipad|ipod/.test(userAgent);
     };
+
+    const isSafari = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+
+      return /safari/.test(userAgent);
+    };
+
     // Detects if device is in standalone mode
     const isInStandaloneMode = () =>
       'standalone' in window.navigator && (window.navigator as any)?.standalone;
 
     // Checks if should display install popup notification:
-    if (isIos() && !isInStandaloneMode()) {
-      this.showIcon$ = timer(10000).pipe(mapTo(false), startWith(true));
+    if (isIos() && isSafari() && !isInStandaloneMode()) {
+      this.showInstallTooltip$ = timer(10000).pipe(
+        mapTo(false),
+        startWith(true)
+      );
     }
   }
 
