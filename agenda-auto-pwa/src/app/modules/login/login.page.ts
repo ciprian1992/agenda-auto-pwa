@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 @Component({
   selector: 'app-login',
@@ -60,6 +61,15 @@ export class LoginPage implements OnInit {
     } else {
       this.formGroup.markAllAsTouched();
     }
+  }
+
+  public signInWithGoogle(): void {
+    this.auth
+      .signInWithPopup(new GoogleAuthProvider())
+      .then(() => {
+        this.router.navigate(['/dashboard']);
+      })
+      .catch((error) => {});
   }
 
   ngOnInit() {}
